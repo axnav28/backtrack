@@ -17,4 +17,6 @@ Webhook URL:        https://backtrack-teal.vercel.app/api/ring/webhook
 
 These callbacks are publicly reachable over HTTPS. Do not add secrets to Git; add them to the Vercel project environment with `vercel env add` or the Vercel dashboard.
 
+For free-tier persistence, connect Vercel's Upstash for Redis integration. It supplies `KV_REST_API_URL` and `KV_REST_API_TOKEN`; BackTrack then persists pending Ring claims, the active Ring token, and webhook idempotency keys. Without those variables, local development uses an in-memory fallback.
+
 The current demo does not require external services. Live Ring verification additionally requires the Ring Developer Console application and callback configuration; Bedrock requires an IAM role with model invocation permission.

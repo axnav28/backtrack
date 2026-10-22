@@ -6,4 +6,4 @@ The server now exposes `/api/ring/token`, `/api/ring/link`, `/api/ring/webhook`,
 
 Live verification requires a Ring developer application, fresh client credentials, an approved account-linking flow, a stable hardware ID, and either a Ring device or the Ring Playground. No credentials are stored in this repository. The UI therefore reports `DEMO MODE` and never presents synthetic events as live data.
 
-Remaining external milestone: complete the registered app's sign-in-backed account-claim page and move exchanged tokens/webhook idempotency records to encrypted persistent storage. Ring credentials and callback URLs are configured in Vercel; a physical Ring camera is not required when using Ring Playground.
+The account-claim page and Ring integration confirmation are implemented. For a free-tier deployment, connect Vercel's Upstash for Redis integration so exchanged tokens and webhook idempotency records survive serverless restarts. Ring credentials and callback URLs are configured in Vercel; a physical Ring camera is not required when using Ring Playground.
