@@ -1,0 +1,7 @@
+{
+  "buildCommand": "npm run build",
+  "framework": null,
+  "functions": {
+    "server/index.ts": { "maxDuration": 60 }
+  }
+}

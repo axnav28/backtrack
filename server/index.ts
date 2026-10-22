@@ -23,4 +23,5 @@ app.post('/api/investigations', async (req, res) => { const question = typeof re
 const distPath = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '../dist');
 app.use(express.static(distPath));
 app.get(/^(?!\/api).*/, (_req, res) => res.sendFile(path.join(distPath, 'index.html')));
-const port = Number(process.env.PORT ?? 8787); app.listen(port, () => console.log(`BackTrack API listening on http://localhost:${port}`));
+export default app;
+if (process.env.VERCEL !== '1') { const port = Number(process.env.PORT ?? 8787); app.listen(port, () => console.log(`BackTrack API listening on http://localhost:${port}`)); }
