@@ -3,6 +3,7 @@ import type { EvidenceEvent } from '../src/types.js';
 const API_BASE = 'https://api.amazonvision.com';
 const OAUTH_BASE = 'https://oauth.ring.com';
 type TokenResponse = { access_token: string; refresh_token?: string; expires_in?: number; scope?: string; token_type?: string };
+export function ringAccountId(user: any): string | null { const value = user?.data?.id ?? user?.data?.attributes?.account_id ?? user?.id ?? user?.account_id; return value ? String(value) : null; }
 export class RingClient {
   constructor(private readonly accessToken: string, private readonly hardwareId = process.env.RING_HARDWARE_ID ?? crypto.randomUUID()) {}
   private async get(path: string) { const response = await fetch(`${API_BASE}${path}`, { headers: { Authorization: `Bearer ${this.accessToken}`, 'Content-Type': 'application/json', 'User-Agent': 'BackTrack/0.1', Hardware_Id: this.hardwareId } }); if (!response.ok) throw new Error(`Ring API request failed: ${response.status}`); return response.json() as Promise<any>; }
