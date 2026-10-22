@@ -4,6 +4,7 @@ import { ArrowUpRight, Play, Search } from 'lucide-react';
 import './styles.css';
 import './minimal.css';
 import './demo-overrides.css';
+import './command-center.css';
 
 const VIDEO_ID = 'TfTFu8lGrwk';
 const focusFor = (query: string) => query.toLowerCase().includes('suspicious') || query.toLowerCase().includes('activity')
