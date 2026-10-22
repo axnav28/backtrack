@@ -1,5 +1,5 @@
 import crypto from 'node:crypto';
-import type { EvidenceEvent } from '../src/types';
+import type { EvidenceEvent } from '../src/types.js';
 const API_BASE = 'https://api.amazonvision.com';
 const OAUTH_BASE = 'https://oauth.ring.com';
 type TokenResponse = { access_token: string; refresh_token?: string; expires_in?: number; scope?: string; token_type?: string };
