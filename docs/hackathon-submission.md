@@ -10,4 +10,6 @@ BackTrack has a server-side Ring Partner API adapter with the documented API bas
 
 ## Open Source mini challenge
 
-Not yet published. A separate eligible companion project or public contribution must be created and its URL recorded here before submission; the BackTrack repository alone is not claimed as satisfying this challenge.
+Published companion project: https://github.com/axnav28/backtrack-timeline
+
+It is an MIT-licensed TypeScript utility that de-duplicates and orders event streams, groups nearby observations with a configurable window, and preserves an explicit rationale that temporal proximity is not proof of common cause. It has deterministic tests and is intentionally separate from the BackTrack application.
