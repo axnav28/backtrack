@@ -17,4 +17,33 @@ export class RingClient {
 }
 export async function exchangeRingCode(code: string): Promise<TokenResponse> { const body = new URLSearchParams({ grant_type: 'authorization_code', code, client_id: process.env.RING_CLIENT_ID ?? '', client_secret: process.env.RING_CLIENT_SECRET ?? '' }); const response = await fetch(`${OAUTH_BASE}/oauth/token`, { method: 'POST', headers: { 'content-type': 'application/x-www-form-urlencoded', 'User-Agent': 'BackTrack/0.1' }, body }); if (!response.ok) throw new Error(`Ring token exchange failed: ${response.status}`); return response.json() as Promise<TokenResponse>; }
 export function verifyRingSignature(rawBody: Buffer, signature: string | undefined, signingKey = process.env.RING_HMAC_KEY) { if (!signingKey || !signature) return false; const expected = crypto.createHmac('sha256', signingKey).update(rawBody).digest('hex'); const received = signature.replace(/^sha256=/, ''); return received.length === expected.length && crypto.timingSafeEqual(Buffer.from(received), Buffer.from(expected)); }
-export function normalizeRingEvent(payload: any, cameraName: string, deviceId: string): EvidenceEvent { const timestamp = payload.timestamp ?? payload.created_at ?? payload.createdAt; if (!timestamp) throw new Error('Ring event has no timestamp'); return { id: String(payload.id ?? payload.event_id), deviceId, cameraName, kind: payload.type === 'motion' ? 'motion' : payload.type === 'person' ? 'person' : 'unknown', label: payload.type ?? 'Ring event', timestamp: new Date(timestamp).toISOString(), endTimestamp: new Date(payload.end_timestamp ?? timestamp).toISOString(), hasRecording: Boolean(payload.media?.url ?? payload.recording_url), mode: 'live', rawType: payload.type } }
+export function makeRingNonce(time: number | string, accountId: string, signingKey = process.env.RING_HMAC_KEY) {
+  if (!signingKey) throw new Error('RING_HMAC_KEY is not configured.');
+  return crypto.createHmac('sha256', signingKey).update(`${time}:${accountId}`).digest('base64url');
+}
+export function verifyRingNonce(time: number | string, nonce: string | undefined, accountId: string, signingKey = process.env.RING_HMAC_KEY, maxAgeMs = 600_000, now = Date.now()) {
+  if (!nonce || !signingKey) return false;
+  const parsedTime = Number(time);
+  if (!Number.isFinite(parsedTime) || Math.abs(now - parsedTime) > maxAgeMs) return false;
+  const expected = makeRingNonce(time, accountId, signingKey);
+  return nonce.length === expected.length && crypto.timingSafeEqual(Buffer.from(nonce), Buffer.from(expected));
+}
+function ringTypeToKind(type: unknown): EvidenceEvent['kind'] {
+  const value = String(type ?? '').toLowerCase();
+  if (value.includes('package')) return 'package';
+  if (value.includes('doorbell')) return 'doorbell';
+  if (value.includes('person')) return 'person';
+  if (value.includes('motion')) return 'motion';
+  return 'unknown';
+}
+export function normalizeRingEvent(payload: any, cameraName: string, deviceId: string): EvidenceEvent {
+  const data = payload?.data ?? payload;
+  const attributes = data?.attributes ?? data;
+  const timestamp = attributes.timestamp ?? attributes.created_at ?? attributes.createdAt ?? payload?.timestamp;
+  if (!timestamp) throw new Error('Ring event has no timestamp');
+  const type = attributes.type ?? data?.type ?? payload?.type;
+  const eventId = data?.id ?? payload?.id ?? payload?.event_id;
+  if (!eventId) throw new Error('Ring event has no identifier');
+  const endTimestamp = attributes.end_timestamp ?? attributes.ended_at ?? timestamp;
+  return { id: String(eventId), deviceId, cameraName, kind: ringTypeToKind(type), label: String(attributes.label ?? type ?? 'Ring event'), timestamp: new Date(timestamp).toISOString(), endTimestamp: new Date(endTimestamp).toISOString(), hasRecording: Boolean(attributes.media?.url ?? attributes.recording_url ?? attributes.video_url ?? attributes.component_ids?.length), mode: 'live', rawType: type ? String(type) : undefined };
+}
