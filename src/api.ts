@@ -1,3 +1,5 @@
-import type { Camera, Investigation } from './types';
+import type { Camera, EvidenceEvent, Investigation } from './types';
 export async function loadDemo() { const r = await fetch('/api/demo'); return r.json() as Promise<{ cameras: Camera[]; investigation: Investigation }>; }
+export async function loadLive() { const r = await fetch('/api/ring/live'); if (!r.ok) throw new Error('Live Ring data unavailable'); return r.json() as Promise<{ cameras: Camera[]; events: EvidenceEvent[] }>; }
+export async function loadVideo(deviceId: string, timestamp: number) { const r = await fetch(`/api/ring/media/${encodeURIComponent(deviceId)}/video`, { method: 'POST', headers: { 'content-type': 'application/json' }, body: JSON.stringify({ timestamp }) }); if (!r.ok) throw new Error((await r.json()).error ?? 'Ring video unavailable'); return r.json() as Promise<{ location: string | null }>; }
 export async function runInvestigation(input: { question: string; cameras: string[]; start: string; end: string }) { const r = await fetch('/api/investigations', { method: 'POST', headers: { 'content-type': 'application/json' }, body: JSON.stringify(input) }); if (!r.ok) throw new Error((await r.json()).error ?? 'Investigation failed'); return r.json() as Promise<Investigation>; }
