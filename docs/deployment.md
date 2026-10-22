@@ -4,4 +4,17 @@ The production server serves both the built frontend and `/api`. Deploy as one N
 
 Vercel can deploy the exported Express app using `vercel.json`; use `npm run build` as the build command. Render uses `npm ci && npm run build` and `npm start` as a web service.
 
+Current production deployment: https://backtrack-teal.vercel.app
+
+Ring staging endpoint values for this deployment:
+
+```text
+Account Link URL:   https://backtrack-teal.vercel.app/api/ring/link
+App Homepage URL:   https://backtrack-teal.vercel.app/
+Token Exchange URL: https://backtrack-teal.vercel.app/api/ring/token
+Webhook URL:        https://backtrack-teal.vercel.app/api/ring/webhook
+```
+
+These callbacks are publicly reachable over HTTPS. Do not add secrets to Git; add them to the Vercel project environment with `vercel env add` or the Vercel dashboard.
+
 The current demo does not require external services. Live Ring verification additionally requires the Ring Developer Console application and callback configuration; Bedrock requires an IAM role with model invocation permission.
