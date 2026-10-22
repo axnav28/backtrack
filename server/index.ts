@@ -1,5 +1,7 @@
 import 'dotenv/config';
 import crypto from 'node:crypto';
+import path from 'node:path';
+import { fileURLToPath } from 'node:url';
 import express from 'express';
 import cors from 'cors';
 import { demoCameras, demoInvestigation } from '../src/demo';
@@ -18,4 +20,7 @@ app.get('/api/ring/devices', async (_req, res) => { if (!process.env.RING_ACCESS
 app.post('/api/ring/media/:deviceId/video', async (req, res) => { if (!process.env.RING_ACCESS_TOKEN) return res.status(503).json({ error: 'RING_ACCESS_TOKEN is not configured.' }); const timestamp = Number(req.body?.timestamp); const duration = Number(req.body?.duration ?? 60000); if (!Number.isInteger(timestamp) || timestamp <= 0 || !Number.isInteger(duration) || duration < 1000 || duration > 900000) return res.status(400).json({ error: 'timestamp and duration are invalid.' }); try { res.json(await new RingClient(process.env.RING_ACCESS_TOKEN).videoDownload(req.params.deviceId, timestamp, duration, typeof req.body?.componentId === 'string' ? req.body.componentId : undefined)); } catch (error) { res.status(502).json({ error: error instanceof Error ? error.message : 'Ring video download failed' }); } });
 app.get('/api/demo', (_req, res) => res.json({ cameras: demoCameras, investigation: demoInvestigation }));
 app.post('/api/investigations', async (req, res) => { const question = typeof req.body?.question === 'string' ? req.body.question.trim() : ''; if (!question || question.length > 500) return res.status(400).json({ error: 'A question up to 500 characters is required.' }); const events = normalizeEvents(demoInvestigation.events.filter(e => (req.body.cameras ?? demoCameras.map(c => c.id)).includes(e.deviceId))); const report = { ...demoInvestigation, id: `demo-${Date.now()}`, question, events }; try { const modelOutput = await generateBedrockReport(question, events); if (modelOutput) report.provider = 'bedrock'; } catch (error) { console.warn('Bedrock unavailable; using deterministic report', error instanceof Error ? error.message : 'unknown'); } res.json(report); });
+const distPath = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '../dist');
+app.use(express.static(distPath));
+app.get(/^(?!\/api).*/, (_req, res) => res.sendFile(path.join(distPath, 'index.html')));
 const port = Number(process.env.PORT ?? 8787); app.listen(port, () => console.log(`BackTrack API listening on http://localhost:${port}`));
