@@ -1,0 +1,11 @@
+import 'dotenv/config';
+import express from 'express';
+import cors from 'cors';
+import { demoCameras, demoInvestigation } from '../src/demo';
+import { normalizeEvents } from '../src/timeline';
+import { generateBedrockReport } from './bedrock';
+const app = express(); app.use(cors()); app.use(express.json({ limit: '32kb' }));
+app.get('/api/health', (_req, res) => res.json({ ok: true, ringConfigured: Boolean(process.env.RING_CLIENT_ID), bedrockConfigured: Boolean(process.env.AWS_REGION && process.env.BEDROCK_MODEL_ID) }));
+app.get('/api/demo', (_req, res) => res.json({ cameras: demoCameras, investigation: demoInvestigation }));
+app.post('/api/investigations', async (req, res) => { const question = typeof req.body?.question === 'string' ? req.body.question.trim() : ''; if (!question || question.length > 500) return res.status(400).json({ error: 'A question up to 500 characters is required.' }); const events = normalizeEvents(demoInvestigation.events.filter(e => (req.body.cameras ?? demoCameras.map(c => c.id)).includes(e.deviceId))); const report = { ...demoInvestigation, id: `demo-${Date.now()}`, question, events }; try { const modelOutput = await generateBedrockReport(question, events); if (modelOutput) report.provider = 'bedrock'; } catch (error) { console.warn('Bedrock unavailable; using deterministic report', error instanceof Error ? error.message : 'unknown'); } res.json(report); });
+const port = Number(process.env.PORT ?? 8787); app.listen(port, () => console.log(`BackTrack API listening on http://localhost:${port}`));
