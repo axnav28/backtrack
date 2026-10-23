@@ -8,13 +8,13 @@ export const demoCameras: Camera[] = [
 
 const at = (hour: number, minute: number) => `2026-10-22T${String(hour).padStart(2, '0')}:${String(minute).padStart(2, '0')}:00+05:30`;
 export const demoEvents: EvidenceEvent[] = [
-  { id: 'evt-0712-drive', deviceId: 'cam-driveway', cameraName: 'Driveway', kind: 'motion', label: 'Motion detected', timestamp: at(19, 12), endTimestamp: at(19, 13), hasRecording: true, mode: 'demo', notes: 'Synthetic event; clip available.' },
-  { id: 'evt-0714-door', deviceId: 'cam-front-door', cameraName: 'Front Door', kind: 'package', label: 'Package visible near door', timestamp: at(19, 14), endTimestamp: at(19, 15), hasRecording: true, mode: 'demo' },
-  { id: 'evt-0718-door', deviceId: 'cam-front-door', cameraName: 'Front Door', kind: 'person', label: 'Person detected', timestamp: at(19, 18), endTimestamp: at(19, 20), hasRecording: true, mode: 'demo' },
-  { id: 'evt-0719-drive', deviceId: 'cam-driveway', cameraName: 'Driveway', kind: 'person', label: 'Person detected at driveway edge', timestamp: at(19, 19), endTimestamp: at(19, 20), hasRecording: true, mode: 'demo' },
-  { id: 'evt-0721-side', deviceId: 'cam-side-entry', cameraName: 'Side Entrance', kind: 'motion', label: 'Motion detected', timestamp: at(19, 21), endTimestamp: at(19, 22), hasRecording: false, mode: 'demo', notes: 'Recording unavailable in fixture.' },
-  { id: 'evt-0724-door', deviceId: 'cam-front-door', cameraName: 'Front Door', kind: 'motion', label: 'Motion detected; package no longer visible', timestamp: at(19, 24), endTimestamp: at(19, 25), hasRecording: true, mode: 'demo', notes: 'Absence is not proof of removal.' },
-  { id: 'evt-0731-drive', deviceId: 'cam-driveway', cameraName: 'Driveway', kind: 'motion', label: 'Motion detected', timestamp: at(19, 31), endTimestamp: at(19, 32), hasRecording: true, mode: 'demo' },
+  { id: 'evt-0712-drive', deviceId: 'cam-driveway', cameraName: 'Driveway', kind: 'motion', label: 'Motion detected', timestamp: at(19, 12), endTimestamp: at(19, 13), hasRecording: true, mode: 'demo', sourceSystem: 'DriveWatch', notes: 'Synthetic event; clip available.' },
+  { id: 'evt-0714-door', deviceId: 'cam-front-door', cameraName: 'Front Door', kind: 'package', label: 'Package visible near door', timestamp: at(19, 14), endTimestamp: at(19, 15), hasRecording: true, mode: 'demo', sourceSystem: 'Ring', },
+  { id: 'evt-0718-door', deviceId: 'cam-front-door', cameraName: 'Front Door', kind: 'person', label: 'Person detected', timestamp: at(19, 18), endTimestamp: at(19, 20), hasRecording: true, mode: 'demo', sourceSystem: 'Ring' },
+  { id: 'evt-0719-drive', deviceId: 'cam-driveway', cameraName: 'Driveway', kind: 'person', label: 'Person detected at driveway edge', timestamp: at(19, 19), endTimestamp: at(19, 20), hasRecording: true, mode: 'demo', sourceSystem: 'DriveWatch' },
+  { id: 'evt-0721-side', deviceId: 'cam-side-entry', cameraName: 'Side Entrance', kind: 'motion', label: 'Motion detected', timestamp: at(19, 21), endTimestamp: at(19, 22), hasRecording: false, mode: 'demo', sourceSystem: 'HomeEye', notes: 'Recording unavailable in fixture.' },
+  { id: 'evt-0724-door', deviceId: 'cam-front-door', cameraName: 'Front Door', kind: 'motion', label: 'Motion detected; package no longer visible', timestamp: at(19, 24), endTimestamp: at(19, 25), hasRecording: true, mode: 'demo', sourceSystem: 'Ring', notes: 'Absence is not proof of removal.' },
+  { id: 'evt-0731-drive', deviceId: 'cam-driveway', cameraName: 'Driveway', kind: 'motion', label: 'Motion detected', timestamp: at(19, 31), endTimestamp: at(19, 32), hasRecording: true, mode: 'demo', sourceSystem: 'DriveWatch' },
 ];
 
 export const demoInvestigation: Investigation = {
