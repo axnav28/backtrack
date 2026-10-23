@@ -10,3 +10,6 @@
 .case-watch:hover{color:#e2fcff;background:#0d2029}
 .case-watch>span{display:flex;align-items:center;gap:5px;color:#6fe4f4;font:8px 'DM Mono';letter-spacing:.7px;white-space:nowrap}
 .case-watch>svg{margin-left:auto;flex:none;color:#6fe4f4}
+.source-video-fallback{position:absolute;inset:0;background-position:center;background-size:cover;filter:saturate(.7) contrast(1.05);opacity:.72}
+.source-video{position:absolute;inset:0;width:100%;height:100%;border:0;pointer-events:none;opacity:.76;filter:saturate(.8) contrast(1.08);z-index:1}
+.empty-frame>span,.empty-frame>b,.empty-frame>em{z-index:2}
