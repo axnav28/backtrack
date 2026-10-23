@@ -2,7 +2,7 @@
 
 ## Ring track
 
-BackTrack has a server-side Ring Partner API adapter with the documented API base, bearer headers, device discovery path, and historical event path. The default demo is explicitly synthetic and does not claim live Ring data. Live OAuth, webhook verification, and media retrieval are external setup items pending Ring app credentials and device access.
+BackTrack is positioned as an investigation layer for recordings from different camera brands. The current demo uses local recordings and demonstrates the cross-camera timeline, related-observation, missing-evidence, and source-verification workflow. A server-side Ring Partner API adapter is included as one camera-system integration boundary; live OAuth, webhook verification, and media retrieval remain external setup items pending credentials and device access.
 
 ## AWS Builder
 

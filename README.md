@@ -1,8 +1,10 @@
 # BackTrack
 
-**Hours of footage. One clear story.**
+## The investigation layer for every security camera.
 
-BackTrack is an evidence-first home security investigation workspace. It reconstructs a chronological story across authorized Ring cameras, keeps every factual finding tied to a source event, and makes missing evidence visible.
+Import recordings from different camera brands. Ask what happened. BackTrack builds a chronological incident timeline, links potentially related observations across cameras, highlights missing evidence, and lets users verify every finding against the original footage.
+
+The defining feature: give BackTrack recordings from three unrelated camera systems and ask it to reconstruct one incident, with traceable evidence and explicit uncertainty.
 
 ## Run locally
 
@@ -15,7 +17,7 @@ Open http://localhost:5173. The default experience is an explicitly labeled dete
 
 ## Status
 
-- Implemented and tested: demo investigation workflow, normalization, ordering, duplicate handling, report provenance UI, missing-recording handling, Ring API adapter boundary, Bedrock adapter boundary.
+- Implemented and tested: multi-source demo investigation workflow, normalization, ordering, duplicate handling, cross-camera correlation, report provenance UI, missing-recording handling, Ring API adapter boundary, Bedrock adapter boundary.
 - Simulated: all data visible in the default browser flow is synthetic and labeled `DEMO MODE`.
 - Not live-verified: Ring OAuth/account linking, webhooks, historical media downloads, and Bedrock invocation require external app registration and credentials.
 

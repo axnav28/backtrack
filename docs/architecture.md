@@ -1,9 +1,9 @@
 # Architecture
 
 ```text
-React workspace → Express API → Ring adapter → Ring Partner API
-                         ├── timeline engine → evidence report
+React workspace → Express API → camera-system adapters → source recordings
+                         ├── timeline engine → incident reconstruction
                          └── Bedrock adapter (optional, server-only)
 ```
 
-The browser never calls Ring or AWS directly. Demo fixtures are isolated from the Ring client and are labeled synthetic in the UI. The timeline engine de-duplicates and orders source events before any report provider sees them.
+The browser never calls camera providers or AWS directly. Demo recordings are labeled synthetic in the UI. The timeline engine de-duplicates, orders, and relates observations before any report provider sees them.
