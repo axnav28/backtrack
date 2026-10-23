@@ -1,7 +1,7 @@
 import crypto from 'node:crypto';
 import { describe, expect, it } from 'vitest';
 import { makeRingNonce, normalizeRingEvent, verifyRingNonce, verifyRingSignature } from '../server/ring.js';
-import { parseBedrockReport } from '../server/bedrock.js';
+import { parseBedrockReport, parseBedrockVision } from '../server/bedrock.js';
 
 describe('Ring security and event adapter', () => {
   it('verifies the raw webhook signature', () => {
@@ -31,5 +31,9 @@ describe('Bedrock response adapter', () => {
     expect(parseBedrockReport(JSON.stringify({ summary: 'Observed activity.', facts: ['Motion at 12:00.'], inferences: [], uncertainties: ['No video.'] }))).toEqual({ summary: 'Observed activity.', facts: ['Motion at 12:00.'], inferences: [], uncertainties: ['No video.'] });
     expect(parseBedrockReport('not json')).toBeNull();
     expect(parseBedrockReport(JSON.stringify({ summary: 'missing arrays' }))).toBeNull();
+  });
+  it('accepts a timestamped vision result and rejects unsafe ranges', () => {
+    expect(parseBedrockVision(JSON.stringify({ matchSeconds: 12, summary: 'A person is visible near the entrance.', observations: ['Person visible at the doorway.'], uncertainty: 'The sampled frames do not show what happened between timestamps.' }))).toMatchObject({ matchSeconds: 12 });
+    expect(parseBedrockVision(JSON.stringify({ matchSeconds: 45, summary: 'Too late.', observations: [], uncertainty: 'Invalid.' }))).toBeNull();
   });
 });

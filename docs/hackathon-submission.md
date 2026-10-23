@@ -6,7 +6,7 @@ BackTrack has a server-side Ring Partner API adapter with the documented API bas
 
 ## AWS Builder
 
-`server/bedrock.ts` makes a real AWS SDK v3 Bedrock Runtime `ConverseCommand` call when `AWS_REGION` and `BEDROCK_MODEL_ID` are configured. The deterministic report remains available when AWS is unavailable.
+`server/bedrock.ts` makes real AWS SDK v3 Bedrock Runtime `ConverseCommand` calls when `AWS_REGION` and `BEDROCK_MODEL_ID` are configured. Investigation reports use structured event evidence, while footage search samples four frames from the selected local MP4 and sends them as multimodal image content. Bedrock returns a validated matching timestamp and observations; the deterministic report and 17-second review fallback remain available when AWS is unavailable.
 
 ## Open Source mini challenge
 
