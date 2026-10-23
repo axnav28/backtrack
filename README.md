@@ -20,3 +20,8 @@ Open http://localhost:5173. The default experience is an explicitly labeled dete
 - Not live-verified: Ring OAuth/account linking, webhooks, historical media downloads, and Bedrock invocation require external app registration and credentials.
 
 See [docs/ring-integration.md](docs/ring-integration.md), [docs/aws-integration.md](docs/aws-integration.md), and [docs/implementation-plan.md](docs/implementation-plan.md).
+
+## Submission links
+
+- Live demo: https://backtrack-teal.vercel.app
+- Open-source companion: https://github.com/axnav28/backtrack-timeline

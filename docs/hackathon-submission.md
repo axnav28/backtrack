@@ -12,4 +12,4 @@ BackTrack has a server-side Ring Partner API adapter with the documented API bas
 
 Published companion project: https://github.com/axnav28/backtrack-timeline
 
-It is an MIT-licensed TypeScript utility that de-duplicates and orders event streams, groups nearby observations with a configurable window, and preserves an explicit rationale that temporal proximity is not proof of common cause. It has deterministic tests and is intentionally separate from the BackTrack application.
+It is an MIT-licensed TypeScript utility that de-duplicates and orders event streams, groups nearby observations with a configurable window, scores cross-camera event candidates, and preserves an explicit rationale that temporal proximity is not proof of common cause. It has deterministic tests and is intentionally separate from the BackTrack application.

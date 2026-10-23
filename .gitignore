@@ -1,6 +1,7 @@
 node_modules/
 dist/
 *.tsbuildinfo
+/ft*.mp4
 .env
 .DS_Store
 node_modules
