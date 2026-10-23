@@ -6,6 +6,7 @@ import './cinematic-ui.css';
 import './futuristic.css';
 import './product-polish.css';
 import './local-footage.css';
+import './landing-density.css';
 
 const query = 'Show me suspicious activity around 7:00 AM';
 const shots = Array.from({ length: 12 }, (_, index) => ({ id: index + 1, time: `06:${String(54 + index % 14).padStart(2, '0')}:${String((index * 13) % 60).padStart(2, '0')}`, name: ['NORTH PERIMETER', 'DRIVEWAY EAST', 'SIDE ENTRY', 'GARAGE APPROACH', 'FRONT WALK', 'FRONT DOOR', 'PORCH WIDE', 'DRIVEWAY WEST', 'REAR GATE', 'PATIO', 'NORTH PATH', 'MAILBOX'][index] }));
