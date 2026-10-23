@@ -1,6 +1,7 @@
 .case-card-wrap{min-width:0}
 .case-card{width:100%}
 .case-art{isolation:isolate}
+.case-video-fallback{position:absolute;inset:0;background-position:center;background-size:cover;filter:saturate(.7) contrast(1.05);opacity:.7}
 .case-video{position:absolute;inset:0;width:100%;height:100%;border:0;object-fit:cover;pointer-events:none;opacity:.72;filter:saturate(.8) contrast(1.08)}
 .case-art:after{content:'';position:absolute;inset:0;background:linear-gradient(180deg,#06101866,transparent 42%,#061018aa);pointer-events:none;z-index:1}
 .case-art>span,.case-art>b,.case-art>.case-lines{z-index:2}
