@@ -4,7 +4,3 @@
 .player-video{z-index:1}
 .player-screen .player-overlay{z-index:2}
 .player-screen .player-caption{z-index:3}
-.detection-box{position:absolute;z-index:4;border:3px solid #ffd34d;box-shadow:0 0 0 1px #17130a,0 0 24px #ffd34d99;pointer-events:none;transition:left .12s linear,top .12s linear,width .12s linear,height .12s linear}
-.detection-box:before,.detection-box:after{content:'';position:absolute;width:14px;height:14px;border-color:#fff19a;border-style:solid}
-.detection-box:before{left:-3px;top:-3px;border-width:3px 0 0 3px}.detection-box:after{right:-3px;bottom:-3px;border-width:0 3px 3px 0}
-.detection-box span{position:absolute;left:-3px;top:-28px;background:#ffd34d;color:#17130a;padding:6px 9px;font:700 10px 'DM Mono';letter-spacing:1px;white-space:nowrap}
